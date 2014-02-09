@@ -51,6 +51,12 @@
      presses home. -->
     <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
 
+    <!-- Allow the Dialer to access accounts for lookup services -->
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-feature android:name="com.google.android.feature.GOOGLE_EXPERIENCE" android:required="true" />
+
     <application
         android:name="DialerApplication"
         android:label="@string/applicationLabel"
@@ -61,6 +67,10 @@
 
         <meta-data android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIBXgtCEKQ6W0PXVnW-ZVia2KmlV2AxsTw3GjAeQ" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- The entrance point for Phone UI.
              stateAlwaysHidden is set to suppress keyboard show up on
@@ -313,6 +323,16 @@
                 <action android:name="com.android.incallui.ACTION_HANG_UP_ONGOING_CALL" />
             </intent-filter>
         </receiver>
+
+        <provider android:name="com.android.dialer.lookup.DialerProvider"
+                  android:authorities="com.android.dialer.provider"
+                  android:exported="false"
+                  android:multiprocess="false" />
+
+        <provider android:name="com.android.dialer.lookup.PhoneNumberCacheProvider"
+                  android:authorities="com.android.dialer.cacheprovider"
+                  android:exported="false"
+                  android:multiprocess="false" />
 
     </application>
 </manifest>
